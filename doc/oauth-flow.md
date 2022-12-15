@@ -1,11 +1,11 @@
 # Debugging Dashboard Access Control
 
-DevOps dashboard logins use the assisted tokens flow via a popup window.\
-This includes use of iframes, so configuration settings must be configured correctly.
+DevOps dashboard logins use the [assisted token flow](https://curity.io/docs/idsvr/latest/developer-guide/oauth-service/web-clients/assisted-token-javascript.html) via a popup window.\
+This includes use of framing, so configuration settings must be configured correctly.
 
 ## HTTP Schemes
 
-Firstly, ensure that the same scheme is used by admin and runtime nodes.\
+First, ensure that the same HTTP or HTTPS scheme is used by admin and runtime nodes.\
 Avoid running the Admin UI on HTTPS and the runtime nodes on HTTP.
 
 ## Client Settings
@@ -31,12 +31,13 @@ Then run browser tools and capture tokens returned to the dashboard UI after log
 
 ![Browser Tools Login](browser-tools-login.png)
 
-The dashboard login uses OpenID Connect, and the authentication request contains parameters like these:
+If required, view the OpenID Connect authentication request:
 
 ```
 https://localhost:8443/oauth/v2/oauth-authorize?
 scope=openid+urn%3Ase%3Acurity%3Ascopes%3Aadmin%3Aapi
-&state=kbUl3F1lokSEH6xF8bfaCxCFfaCTSf4BBkvfNpPSb4slKpADf13UvohwGMvrke4r&nonce=6P0kOAdJ3CpcaKLbBWlShZEmBIJvQ17TkHMZjh5GMcaDQvk4reD7v2coRV87U5wt
+&state=kbUl3F1lokSEH6xF8bfaCxCFfaCTSf4BBkvfNpPSb4slKpADf13UvohwGMvrke4r
+&nonce=6P0kOAdJ3CpcaKLbBWlShZEmBIJvQ17TkHMZjh5GMcaDQvk4reD7v2coRV87U5wt
 &client_id=devops_dashboard_restconf_client
 &response_type=code
 &code_challenge=Nh78q8z9VTWlZhU5YXJqQHMk5P9pl_bWg0d-byJF85o
@@ -45,7 +46,7 @@ scope=openid+urn%3Ase%3Acurity%3Ascopes%3Aadmin%3Aapi
 &for_origin=https%3A%2F%2Flocalhost%3A6749
 ```
 
-## Tokens Issued
+## Capture Tokens
 
 You can copy tokens returned to browser tools, which will look similar to this:
 
@@ -67,20 +68,26 @@ Get the access token and introspect it to view claims:
 
 ```bash
 ACCESS_TOKEN='_0XBPWQQ_d18ee5e3-464a-4a86-bb7f-152364daa54e'
-echo $(curl -i -k -s -X POST https://localhost:8443/oauth/v2/oauth-introspect \
+echo $(curl -k -s -X POST https://localhost:8443/oauth/v2/oauth-introspect \
     -u "introspect-client:Password1" \
-    -H "Accept: application/jwt" \
+    -H "Accept: application/json" \
     -H "Content-Type: application/x-www-form-urlencoded" \
     -d "token=$ACCESS_TOKEN") | jq
 ```
 
-You will then see the groups claim issued, and the following example shows an empty array:
+You will then see the groups claim issued.\
+For user accounts from a data source, the `groups` claim is used.\
+The website tutorial explains how this is populated, and how to test the groups claim for a user:
 
 ```json
 {
-  "sub": "johndoe",
+  "sub": "janedoe",
   "purpose": "access_token",
   "iss": "https://localhost:8443/oauth/v2/oauth-anonymous",
+  "groups": [
+    "developers"
+  ],
+  "urn:se:curity:claims:admin:groups": [],
   "active": true,
   "token_type": "bearer",
   "client_id": "devops_dashboard_restconf_client",
@@ -88,21 +95,11 @@ You will then see the groups claim issued, and the following example shows an em
     "urn:se:curity:audiences:admin:api",
     "devops_dashboard_restconf_client"
   ],
-  "nbf": 1671122247,
+  "nbf": 1671128075,
   "scope": "openid urn:se:curity:scopes:admin:api",
-  "urn:se:curity:claims:admin:groups": [],
-  "exp": 1671122547,
-  "delegationId": "0b3a9f52-a899-4b41-a9eb-cfe81a730496",
-  "iat": 1671122247
+  
+  "exp": 1671128375,
+  "delegationId": "c6e216b3-1cd7-4ac0-9a7d-df81c331530a",
+  "iat": 1671128075
 }
 ```
-
-## Groups Claim Runtime Values
-
-The following are built-in groups stored in the 
-
-```text
-urn:se:curity:claims:admin:groups
-```
-
-When dealing with employee accounts, you typically instead want to use groups from the account data.\
