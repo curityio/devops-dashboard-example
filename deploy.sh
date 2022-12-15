@@ -22,7 +22,3 @@ cp ./hooks/pre-commit ./.git/hooks
 # Deploy the system
 #
 docker compose --project-name dashboard up --force-recreate
-if [ $? -ne 0 ]; then
-  echo 'Problem encountered deploying the Curity Identity Server'
-  exit 1
-fi

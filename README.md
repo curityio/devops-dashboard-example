@@ -20,6 +20,8 @@ Run the script to deploy the Curity Identity Server and a SQL database in a smal
 ./deploy.sh
 ```
 
+For simplicity, easiest troubleshooting, and to focus only on the dashboard, the setup uses plain HTTP.
+
 ## Use the Admin UI
 
 Login at `https://localhost:6749/admin` with credentials `admin / Password1`.\
@@ -32,18 +34,27 @@ The administration permissions for each team is configured here:
 Login at `https://localhost:6749/admin/dashboard` with any credentials `johndoe / Password1`.\
 This account represents a high privilege user from a devops team:
 
-![DevOps User](doc/dashboard-devops-user.png)
+![DevOps User](doc/devops-user-access.png)
 
 ## Use the DevOps Dashboard as a Low Privilege User
 
 Login at `https://localhost:6749/admin/dashboard` with any credentials `janedoe / Password1`.\
 This account represents a low privilege user from a devlopment team, who can only view OAuth clients:
 
-![Developer User](doc/dashboard-developer-user.png)
+![Developer User](doc/developer-user-access.png)
 
 ## Website Documentation
 
-See the [DevOps Dashboard](https://curity.io/resources/learn/devops-dashboard) tutorial for step by step instructions.
+See the [DevOps Dashboard](https://curity.io/resources/learn/devops-dashboard) tutorial for a step by step walkthrough.\
+The walkthrough starts from an empty installation and only the built-in `admin` user account.\
+It then shows how to migrate administration to employee user accounts stored in a data source.
+
+## Technical Details
+
+For further information on technical aspects of the example setup, and to troubleshoot, see these pages:
+
+- [OAuth Flow](doc/oauth-flow.md)
+- [Data Access](doc/data-access.md)
 
 ## More Information
 
