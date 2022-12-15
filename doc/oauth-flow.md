@@ -31,7 +31,7 @@ Then run browser tools and capture tokens returned to the dashboard UI after log
 
 ![Browser Tools Login](browser-tools-login.png)
 
-If required, view the OpenID Connect authentication request:
+If required, also view other messages, including the OpenID Connect authentication request:
 
 ```
 https://localhost:8443/oauth/v2/oauth-authorize?
@@ -75,8 +75,7 @@ echo $(curl -k -s -X POST https://localhost:8443/oauth/v2/oauth-introspect \
     -d "token=$ACCESS_TOKEN") | jq
 ```
 
-You will then see the groups claim issued.\
-For user accounts from a data source, the `groups` claim is used.\
+For user accounts from a data source, the `groups` claim controls permissions to the DevOps dashboard.\
 The website tutorial explains how this is populated, and how to test the groups claim for a user:
 
 ```json
