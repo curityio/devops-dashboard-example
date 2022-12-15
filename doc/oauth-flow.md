@@ -1,7 +1,7 @@
 # Debugging Dashboard Access Control
 
 DevOps dashboard logins use the [assisted token flow](https://curity.io/docs/idsvr/latest/developer-guide/oauth-service/web-clients/assisted-token-javascript.html) via a popup window.\
-This includes use of framing, so configuration settings must be configured correctly.
+This includes use of framing, so configuration settings must be set correctly, to prevent browser permission errors.
 
 ## HTTP Schemes
 
