@@ -14,7 +14,7 @@ Also ensure that docker and docker compose are installed on the local computer
 
 ## Deploy the System
 
-Run the following script to deploy the Curity Identity Server and a SQL database in a small docker compose network:
+Run the script to deploy the Curity Identity Server and a SQL database in a small docker compose network:
 
 ```bash
 ./deploy.sh
