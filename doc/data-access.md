@@ -1,12 +1,12 @@
 # Data Access
 
 This document provides some commands for working with the example setup's database.\
-This can be useful when troubleshooting access denied issues due to user group claims.
+This can be useful when troubleshooting groups stored against user accounts.
 
 ## Preconfigured Users
 
-The Docker deployment uses a postgres database that stores data for the Curity Identity Server.\
-The schema and data are provided in a postgres dump called `data-backup.sql`
+The Docker deployment uses a postgres database as a default data source for the Curity Identity Server.\
+The schema and user accounts are provided in a postgres dump called `data-backup.sql`.
 
 ## Get Connected to the Database
 
@@ -36,5 +36,5 @@ After creating new users in the dashboard, create an updated database dump if re
 This will ensure that your users still exist if you redeploy the system:
 
 ```bash
-docker exec -it dashboard-curity-data-1 bash -c "export PGPASSWORD=Password1 && pg_dump -U postgres -d idsvr" > ./data-backup2.sql
+docker exec -it dashboard-curity-data-1 bash -c "export PGPASSWORD=Password1 && pg_dump -U postgres -d idsvr" > ./data-backup.sql
 ```
