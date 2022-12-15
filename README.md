@@ -23,7 +23,7 @@ Run the script to deploy the Curity Identity Server and a SQL database in a smal
 ## Use the Admin UI
 
 Login at `https://localhost:6749/admin` with credentials `admin / Password1`.\
-The DevOps dashboard permissions are configured here:
+The administration permissions for each team is configured here:
 
 ![Admin UI](doc/admin-ui.png)
 
@@ -43,7 +43,7 @@ This account represents a low privilege user from a devlopment team, who can onl
 
 ## Website Documentation
 
-See the [DevOps Dashboard](https://curity.io/resources/learn/devops-dashboard) tutorial for step by step instructions to get up and running.
+See the [DevOps Dashboard](https://curity.io/resources/learn/devops-dashboard) tutorial for step by step instructions.
 
 ## More Information
 
