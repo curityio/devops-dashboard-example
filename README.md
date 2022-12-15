@@ -14,7 +14,7 @@ Also ensure that docker and docker compose are installed on the local computer
 
 ## Deploy the System
 
-Run the following script:
+Run the following script to deploy the Curity Identity Server and a SQL database in a small docker compose network:
 
 ```bash
 ./deploy.sh
@@ -43,7 +43,7 @@ This account represents a low privilege user from a devlopment team, who can onl
 
 ## Website Documentation
 
-See the [DevOps Dashboard](https://curity.io/resources/learn/devops-dashboard) tutorial for step by step instructions
+See the [DevOps Dashboard](https://curity.io/resources/learn/devops-dashboard) tutorial for step by step instructions to get up and running.
 
 ## More Information
 
