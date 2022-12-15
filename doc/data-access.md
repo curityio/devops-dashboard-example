@@ -1,14 +1,14 @@
 # Data Access
 
 This document provides some commands for working with the example setup's database.\
-This can be useful when troubleshooting groups stored against user accounts.
+This can be useful when you want to view groups and other attributes stored against user accounts.
 
-## Preconfigured Users
+## Shipped Users
 
 The Docker deployment uses a postgres database as a default data source for the Curity Identity Server.\
 The schema and user accounts are provided in a postgres dump called `data-backup.sql`.
 
-## Get Connected to the Database
+## Connected to the Database
 
 When the Docker system is running, connect to the postgres docker container with this command:
 
@@ -22,7 +22,7 @@ Then connect to the database:
 export PGPASSWORD=Password1 && psql -h localhost 5432 -d idsvr -U postgres
 ```
 
-## Query Users and Groups
+## Query Users and their Groups
 
 Then query the shipped user accounts, and any you create via the DevOps dashboard:
 
