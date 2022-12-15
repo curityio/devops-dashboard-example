@@ -8,7 +8,7 @@ This can be useful when you want to view groups and other attributes stored agai
 The Docker deployment uses a postgres database as a default data source for the Curity Identity Server.\
 The schema and user accounts are provided in a postgres dump called `data-backup.sql`.
 
-## Connected to the Database
+## Connect to the Database
 
 When the Docker system is running, connect to the postgres docker container with this command:
 
@@ -32,8 +32,9 @@ select username, attributes from accounts;
 
 ## Backup New Users
 
-After creating new users in the dashboard, create an updated database dump if required.\
+After creating new users in the dashboard, back them up if required.\
 This will ensure that your users still exist if you redeploy the system:
+Run the following command from the host computer, to create the backup:
 
 ```bash
 docker exec -it dashboard-curity-data-1 bash -c "export PGPASSWORD=Password1 && pg_dump -U postgres -d idsvr" > ./data-backup.sql
