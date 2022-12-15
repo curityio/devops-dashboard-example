@@ -1,6 +1,6 @@
 # Devops Dashboard Example
 
-A fast demo setup of the DevOps dashboard for the Curity Identity Server
+A fast demo setup of the DevOps dashboard for the Curity Identity Server.
 
 ## Prerequisites
 
