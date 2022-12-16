@@ -44,7 +44,7 @@ This account represents a low privilege user from a devlopment team, who can onl
 
 ## Website Documentation
 
-See the [DevOps Dashboard](https://curity.io/resources/learn/devops-dashboard) tutorial for a step by step walkthrough.
+See the [DevOps Dashboard User Administration](https://curity.io/resources/learn/devops-dashboard-user-administration) tutorial for a step by step walkthrough.
 
 ## More Information
 
