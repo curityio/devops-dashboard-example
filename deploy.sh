@@ -9,6 +9,14 @@ export ADMIN_BASE_URL='https://localhost:6749'
 export RUNTIME_BASE_URL='https://localhost:8443'
 
 #
+# Check there is a license file
+#
+if [ ! -f './license.json' ]; then
+  echo 'Please copy a valid license file for the Curity Identity Server into the root folder before deploying'
+  exit
+fi
+
+#
 # Clear cached database volumes on disk if required
 #
 rm -rf data 2>/dev/null
