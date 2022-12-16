@@ -22,7 +22,7 @@
          <services>
             <zones>
                <default-zone>
-                  <symmetric-key>data:text/plain;aes,v:S.WFNVY1R6a0pFTjFvZ3R5Sw==.sUPL927A-lQRQ1XikMXcsg==.zIjynzY6M24hl3XEuN2yXXPK0O9111W1R6PAcy9qKFfvOuPer5Nyp_xCxw-e42KNVRMtv3QDq66m5JCxWoNrWv0vJZxgs2DENheIYnIVZwQ=.yWbLXXGbZ4VJBty5c0T1AQuhHRRea9GwhLDfXo_XId8=</symmetric-key>
+                  <symmetric-key>data:text/plain;aes,v:S.Q0RYZzU4S0NiM1JxUHpaaw==.wy41xdBmCD-qN794iZDYbg==.dzgsT36HC8-74wIP96AW8m5_7nA5bVKUSOm_Nxqa9oxrdiZCR2uYqo3_5APckIp_VSNzlnr11qfWNKi_s6TnN8_Jre_D3XT4ZEu1jUa-DGs=.Ni3HjxdLWcHSHU9HFK41paeiAyzxGRjQA-Kp7Qv6JA8=</symmetric-key>
                   <allowed-origins-for-cors>#{ADMIN_BASE_URL}</allowed-origins-for-cors>
                </default-zone>
             </zones>
@@ -54,16 +54,20 @@
          <type xmlns:auth="https://curity.se/ns/conf/profile/authentication">auth:authentication-service</type>
          <settings>
             <authentication-service xmlns="https://curity.se/ns/conf/profile/authentication">
+               <authentication-actions>
+                  <authentication-action>
+                     <id>external-attributes</id>
+                     <script-transformer xmlns="https://curity.se/ns/ext-conf/script-transformer">
+                        <transformation-procedure>external-attributes-proc</transformation-procedure>
+                     </script-transformer>
+                  </authentication-action>
+               </authentication-actions>
                <authenticators>
                   <authenticator>
-                     <id>htmlform</id>
-                     <html-form xmlns="https://curity.se/ns/conf/authenticators/html-form">
-                        <account-manager>default-account-manager</account-manager>
-                        <credential-manager>default-credential-manager</credential-manager>
-                     </html-form>
-                  </authenticator>
-                  <authenticator>
                      <id>username</id>
+                     <authentication-actions>
+                        <login>external-attributes</login>
+                     </authentication-actions>
                      <username xmlns="https://curity.se/ns/ext-conf/username" />
                   </authenticator>
                </authenticators>
@@ -204,9 +208,10 @@
                   </claim>
                   <claim>
                      <name>groups</name>
-                     <value-provided-by>account-manager-claims-provider</value-provided-by>
+                     <value-provided-by>subject-claims-provider</value-provided-by>
                      <transformation>
-                        <input-attribute-names>groups</input-attribute-names>
+                        <input-attribute-names>role</input-attribute-names>
+                        <value-transformation-procedure>ZnVuY3Rpb24gdHJhbnNmb3JtKGF0dHJpYnV0ZXMpIHsKICByZXR1cm4gW2F0dHJpYnV0ZXMucm9sZV07Cn0=</value-transformation-procedure>
                      </transformation>
                   </claim>
                   <claim>
@@ -283,12 +288,16 @@
                         <account-manager>
                            <id>default-account-manager</id>
                         </account-manager>
-                        <map-account-to-openid-connect-claims>false</map-account-to-openid-connect-claims>
+                        <map-account-to-openid-connect-claims>true</map-account-to-openid-connect-claims>
                      </account-manager-claims-provider>
                   </claims-value-provider>
                   <claims-value-provider>
                      <id>devops_dashboard_admin_groups_claims_provider</id>
                      <admin-groups-claims-provider xmlns="https://curity.se/ns/ext-conf/admin-groups-claims-provider" />
+                  </claims-value-provider>
+                  <claims-value-provider>
+                     <id>subject-claims-provider</id>
+                     <authentication-subject-claims-provider xmlns="https://curity.se/ns/ext-conf/authentication-subject-claims-provider" />
                   </claims-value-provider>
                   <claims-mappers>
                      <claims-mapper>
@@ -363,7 +372,6 @@
                         <scope>openid</scope>
                         <scope>urn:se:curity:scopes:admin:api</scope>
                         <user-authentication>
-                           <allowed-authenticators>htmlform</allowed-authenticators>
                            <allowed-post-logout-redirect-uris>https://localhost:6749/admin/dashboard/assisted.html</allowed-post-logout-redirect-uris>
                         </user-authentication>
                         <allowed-origins>#{ADMIN_BASE_URL}</allowed-origins>
@@ -463,9 +471,9 @@
          <data-source>
             <id>default-datasource</id>
             <jdbc xmlns="https://curity.se/ns/ext-conf/jdbc">
-               <connection-string>data:text/plain;aes,v:S.endsUWlGRXB1bGpFaDhGZw==.NJYLP5z05Ps_BP9QVFosVw==.ctvoS0Va7LbPLcuw80zEyWkUBeGMo5dKDEIwQ-6DlahPYKW23GbcFyGWzORlyZR7.qiS49RYoBuqN_9lvIITwHTNGcSoV6oEPNP1TX4_rWXE=</connection-string>
+               <connection-string>data:text/plain;aes,v:S.ZUVuTDBHZkNhZ0xvbFRzeg==.3JdIVu5qs4Hi1FJYn3V48Q==.UxfKBhqWr7z2fyKXVpLhZ8mNw-oOUUqU_rtLptyS09H-FHWwk3asYjmxlv4h1gYH.r7BtNxqDhigf8V2EE1y4k_Oa5IGo7BMYfxrALjZ7TWg=</connection-string>
                <driver>org.postgresql.Driver</driver>
-               <password>data:text/plain;aes,v:S.cFY1NXhMYmM2U3E1REFrMQ==._lcUUPMXkgjx5Thw-Snfog==.Jws5j1_JPCYmgb-f_XQpSQ==.f-TWwWlnfLJSVhmuubVr5e2z3qOA7-FA2KqTgDjoqyk=</password>
+               <password>data:text/plain;aes,v:S.dUYwNENlRzRZZGwyWGVlWQ==.Kr4N9LYZB5Fnp_fxW5AY_A==.bkgHOlThtr2Elp8vZuQ6qg==.hP-dh9dlPStEtD62nxH0XhSzZmGViplSDeTCjSbeOcE=</password>
                <username>postgres</username>
             </jdbc>
          </data-source>
@@ -497,6 +505,12 @@
       </caching-services>
    </facilities>
    <processing xmlns="https://curity.se/ns/conf/base">
+      <procedures>
+         <transformation-procedure>
+            <id>external-attributes-proc</id>
+            <script>LyoqCiAqIFRoaXMgaXMgYW4gZXhhbXBsZSBwcm9jZWR1cmUgdGhhdCBwZXJmb3JtcyBubyB0cmFuc2Zvcm1hdGlvbgogKiBAcGFyYW0ge3NlLmN1cml0eS5pZGVudGl0eXNlcnZlci5wcm9jZWR1cmVzLmNvbnRleHQuVHJhbnNmb3JtYXRpb25Qcm9jZWR1cmVDb250ZXh0fSBjb250ZXh0CiAqIEByZXR1cm5zIHsqfQogKi8KZnVuY3Rpb24gcmVzdWx0KGNvbnRleHQpIHsKCiAgICB2YXIgYXR0cmlidXRlcyA9IGNvbnRleHQuYXR0cmlidXRlTWFwOwoKICAgIGlmIChhdHRyaWJ1dGVzLnN1YmplY3QgPT09ICdqb2huZG9lJykgewogICAgICAgIGF0dHJpYnV0ZXMucm9sZSA9ICdkZXZvcHMnOwogICAgfQoKICAgIGlmIChhdHRyaWJ1dGVzLnN1YmplY3QgPT09ICdqYW5lZG9lJykgewogICAgICAgIGF0dHJpYnV0ZXMucm9sZSA9ICdkZXZlbG9wZXJzJzsKICAgIH0KCiAgICByZXR1cm4gYXR0cmlidXRlczsKfQ==</script>
+         </transformation-procedure>
+      </procedures>
       <authorization-managers>
          <authorization-manager>
             <id>dashboard_permissions_authorization_manager</id>
