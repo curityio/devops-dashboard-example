@@ -21,7 +21,7 @@ services:
       ADMIN_BASE_URL: "${ADMIN_BASE_URL}"
 
   #
-  # A SQL database for user account storage
+  # A SQL database for customer user accounts (bob and alice)
   #
   curity-data:
     image: postgres:14.5

@@ -1,1 +1,0 @@
-docker exec -it dashboard-curity-idsvr-1 bash -c "idsvr -D > ./config-backup2.xml"
