@@ -30,6 +30,18 @@ Then query the shipped user accounts, and any you create via the DevOps dashboar
 select username, attributes from accounts;
 ```
 
+Note the use of groups stored against user accounts, which control DevOps dashboard permissions:
+
+```text
+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------
+ johndoe  | {"name": {"givenName": "John", "familyName": "Doe"}, "title": "", "emails": [{"type": "", "value": "john.doe@company.com", "primary": true}], "groups": [{"type": "", "value": "devops", "primary": true}], "lo
+cale": "", "nickName": "", "addresses": [], "displayName": "John Doe", "entitlements": [], "phoneNumbers": []}
+ janedoe  | {"name": {"givenName": "Jane", "familyName": "Doe"}, "title": "", "emails": [{"type": "", "value": "jane.doe@company.com", "primary": false}], "groups": [{"type": "", "value": "developers", "primary": true}]
+, "locale": "", "nickName": "", "addresses": [], "displayName": "Jane Doe", "entitlements": [], "phoneNumbers": []}
+(2 rows)
+```
+
 ## Backup New Users
 
 After creating new users in the dashboard, back them up if required.\
