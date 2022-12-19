@@ -379,6 +379,13 @@
                            <code />
                         </capabilities>
                      </client>
+                     <client>
+                        <id>introspect-client</id>
+                        <secret>$5$aRyvWOXJmR77784D$UrcVpbw69xzLVA4/rwj66nkcMT2paCNhXlI3ElLRbTD</secret>
+                        <capabilities>
+                           <introspection/>
+                        </capabilities>
+                     </client>
                   </config-backed>
                </client-store>
             </authorization-server>

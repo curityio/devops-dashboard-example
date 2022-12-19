@@ -86,7 +86,6 @@ The website tutorial explains how this is populated, and how to test the groups 
   "groups": [
     "developers"
   ],
-  "urn:se:curity:claims:admin:groups": [],
   "active": true,
   "token_type": "bearer",
   "client_id": "devops_dashboard_restconf_client",
