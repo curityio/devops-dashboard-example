@@ -4,9 +4,8 @@ A fast demo setup of the DevOps dashboard for the Curity Identity Server.
 
 ## Prerequisites
 
-First ensure that you have a `license.json` file with these features:
+First ensure that you have a `license.json` file with these features, such as a trial license:
 
-- Enterprise license (a trial license is fine)
 - Dashboard feature enabled
 - Access to 3 or more user groups 
 
