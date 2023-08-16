@@ -472,13 +472,13 @@
          <endpoints>
             <endpoint>
                <id>dashboard-management-admin</id>
-               <uri>/dashboard</uri>
+               <uri>/um/graphql/admin</uri>
                <client-authentication>disallow</client-authentication>
                <endpoint-kind>um-graphql-api</endpoint-kind>
             </endpoint>
             <endpoint>
                <id>user-management-admin</id>
-               <uri>/scim</uri>
+               <uri>/um/admin</uri>
                <endpoint-kind>um-api</endpoint-kind>
             </endpoint>
          </endpoints>
