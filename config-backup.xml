@@ -14,7 +14,7 @@
                   </oauth>
                </restconf>
                <devops-dashboard xmlns="https://curity.se/ns/conf/profile/oauth">
-                  <authorization-manager>dashboard_permissions_authorization_manager</authorization-manager>
+                  <authorization-manager>dashboard_groups_authorization_manager</authorization-manager>
                   <client>devops_dashboard_restconf_client</client>
                </devops-dashboard>
             </http>
@@ -34,6 +34,7 @@
                <endpoints>authentication-service-anonymous</endpoints>
                <endpoints>authentication-service-authentication</endpoints>
                <endpoints>authentication-service-registration</endpoints>
+               <endpoints>client-management</endpoints>
                <endpoints>dashboard-management-admin</endpoints>
                <endpoints>token-service-anonymous</endpoints>
                <endpoints>token-service-assisted-token</endpoints>
@@ -111,6 +112,10 @@
          <expose-detailed-error-messages />
          <settings>
             <authorization-server xmlns="https://curity.se/ns/conf/profile/oauth">
+               <authorization-manager>dashboard_groups_authorization_manager</authorization-manager>
+               <database-client>
+                  <client-data-source>default-datasource</client-data-source>
+               </database-client>
                <authentication-service>
                   <authentication-profile>authentication-service</authentication-profile>
                </authentication-service>
@@ -392,6 +397,12 @@
          </settings>
          <endpoints>
             <endpoint>
+               <id>client-management</id>
+               <uri>/client-management</uri>
+               <client-authentication>disallow</client-authentication>
+               <endpoint-kind>oauth-client-graphql-api</endpoint-kind>
+            </endpoint>
+            <endpoint>
                <id>token-service-anonymous</id>
                <uri>/oauth/v2/oauth-anonymous</uri>
                <endpoint-kind>oauth-anonymous</endpoint-kind>
@@ -450,7 +461,7 @@
                <api-authentication>
                   <oauth-service>token-service</oauth-service>
                </api-authentication>
-               <authorization-manager>dashboard_permissions_authorization_manager</authorization-manager>
+               <authorization-manager>dashboard_groups_authorization_manager</authorization-manager>
                <user-account-data-source>default-datasource</user-account-data-source>
                <token-data-source>default-datasource</token-data-source>
                <credential-management>
@@ -520,7 +531,7 @@
       </procedures>
       <authorization-managers>
          <authorization-manager>
-            <id>dashboard_permissions_authorization_manager</id>
+            <id>dashboard_groups_authorization_manager</id>
             <groups xmlns="https://curity.se/ns/conf/authorization-manager/group">
                <scope>urn:se:curity:scopes:admin:api</scope>
                <group>
