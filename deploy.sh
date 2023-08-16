@@ -3,10 +3,10 @@
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 #
-# Set URLs
+# Use HTTP development URLs for simplicity
 #
-export ADMIN_BASE_URL='https://localhost:6749'
-export RUNTIME_BASE_URL='https://localhost:8443'
+export ADMIN_BASE_URL='http://localhost:6749'
+export RUNTIME_BASE_URL='http://localhost:8443'
 
 #
 # Check there is a license file

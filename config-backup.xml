@@ -5,7 +5,7 @@
          <base-url>#{RUNTIME_BASE_URL}</base-url>
          <admin-service>
             <http>
-               <ssl-server-keystore>default-admin-ssl-key</ssl-server-keystore>
+               <base-url>#{ADMIN_BASE_URL}</base-url>
                <web-ui />
                <restconf>
                   <oauth xmlns="https://curity.se/ns/conf/profile/oauth">
@@ -28,8 +28,7 @@
             </zones>
             <service-role>
                <id>default</id>
-               <protocol>https</protocol>
-               <ssl-server-keystore>default-admin-ssl-key</ssl-server-keystore>
+               <protocol>http</protocol>
                <enable-http-v2>true</enable-http-v2>
                <endpoints>authentication-service-anonymous</endpoints>
                <endpoints>authentication-service-authentication</endpoints>
@@ -377,7 +376,7 @@
                         <scope>openid</scope>
                         <scope>urn:se:curity:scopes:admin:api</scope>
                         <user-authentication>
-                           <allowed-post-logout-redirect-uris>https://localhost:6749/admin/dashboard/assisted.html</allowed-post-logout-redirect-uris>
+                           <allowed-post-logout-redirect-uris>#{ADMIN_BASE_URL}/admin/dashboard/assisted.html</allowed-post-logout-redirect-uris>
                         </user-authentication>
                         <allowed-origins>#{ADMIN_BASE_URL}</allowed-origins>
                         <capabilities>

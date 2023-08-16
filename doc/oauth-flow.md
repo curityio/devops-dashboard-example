@@ -6,12 +6,12 @@ This includes use of framing, so configuration settings must be set correctly, t
 ## HTTP Schemes
 
 First, ensure that the same HTTP or HTTPS scheme is used by admin and runtime nodes.\
-Avoid running the Admin UI on HTTPS and the runtime nodes on HTTP.
+Avoid running the Admin UI on HTTPS and runtime nodes on HTTP, or vice versa.
 
 ## Client Settings
 
 These settings at these Admin UI locations affect the browser permissions needed during dashboard logins.\
-In the example setup, these all begin with `https://localhost:6749`:
+In the example setup, these all begin with `http://localhost:6749`:
 
 - System / Zones / Allowed Origins for CORS
 - Profiles / Token Service / Clients / devops_dashboard_restconf_client / Allowed Origins
@@ -24,7 +24,7 @@ If a user is denied access to the DevOps dashboard, it is typically caused by th
 To debug this, first navigate to the dashboard login screen:
 
 ```text
-https://localhost:6749/admin/dashboard/#/login
+http://localhost:6749/admin/dashboard/#/login
 ```
 
 Then run browser tools and capture tokens returned to the dashboard UI after login:
@@ -34,7 +34,7 @@ Then run browser tools and capture tokens returned to the dashboard UI after log
 If required, also view other messages, including the OpenID Connect authentication request:
 
 ```
-https://localhost:8443/oauth/v2/oauth-authorize?
+http://localhost:8443/oauth/v2/oauth-authorize?
 scope=openid+urn%3Ase%3Acurity%3Ascopes%3Aadmin%3Aapi
 &state=kbUl3F1lokSEH6xF8bfaCxCFfaCTSf4BBkvfNpPSb4slKpADf13UvohwGMvrke4r
 &nonce=6P0kOAdJ3CpcaKLbBWlShZEmBIJvQ17TkHMZjh5GMcaDQvk4reD7v2coRV87U5wt
@@ -42,8 +42,8 @@ scope=openid+urn%3Ase%3Acurity%3Ascopes%3Aadmin%3Aapi
 &response_type=code
 &code_challenge=Nh78q8z9VTWlZhU5YXJqQHMk5P9pl_bWg0d-byJF85o
 &code_challenge_method=S256
-&redirect_uri=https%3A%2F%2Flocalhost%3A6749%2Fadmin%2Fdashboard%2Fassisted.html
-&for_origin=https%3A%2F%2Flocalhost%3A6749
+&redirect_uri=http%3A%2F%2Flocalhost%3A6749%2Fadmin%2Fdashboard%2Fassisted.html
+&for_origin=http%3A%2F%2Flocalhost%3A6749
 ```
 
 ## Capture Tokens
@@ -68,7 +68,7 @@ Get the access token and introspect it to view claims:
 
 ```bash
 ACCESS_TOKEN='_0XBPWQQ_d18ee5e3-464a-4a86-bb7f-152364daa54e'
-echo $(curl -k -s -X POST https://localhost:8443/oauth/v2/oauth-introspect \
+echo $(curl -k -s -X POST http://localhost:8443/oauth/v2/oauth-introspect \
     -u "introspect-client:Password1" \
     -H "Accept: application/json" \
     -H "Content-Type: application/x-www-form-urlencoded" \
@@ -82,7 +82,7 @@ The website tutorial explains how this is populated, and how to test the groups 
 {
   "sub": "janedoe",
   "purpose": "access_token",
-  "iss": "https://localhost:8443/oauth/v2/oauth-anonymous",
+  "iss": "http://localhost:8443/oauth/v2/oauth-anonymous",
   "groups": [
     "developers"
   ],
