@@ -172,6 +172,7 @@
                   <scope>
                      <id>urn:se:curity:scopes:admin:api</id>
                      <claims>groups</claims>
+                     <claims>urn:se:curity:claims:admin:groups</claims>
                   </scope>
                </scopes>
                <claims>
