@@ -22,10 +22,7 @@ Run the script to deploy the Curity Identity Server and a SQL database containin
 
 ## Use the Admin UI
 
-Login at http://localhost:6749/admin with credentials `admin / Password1`.\
-The administration permissions for each team is configured under `System / Administrators / DevOps`:
-
-![Admin UI](doc/admin-ui.png)
+Login at http://localhost:6749/admin with credentials `admin / Password1`, to view settings.
 
 ## Use the DevOps Dashboard as a High Privilege User
 
@@ -37,7 +34,7 @@ This account represents a high privilege user from a DevOps team who can edit cu
 ## Use the DevOps Dashboard as a Low Privilege User
 
 Login at `http://localhost:6749/admin/dashboard` with the credentials `janedoe`.\
-This account represents a low privilege user from a devlopment team, who can only edit OAuth clients:
+This account represents a low privilege user from a devlopment team, who has no access to customer users:
 
 ![Developer User](doc/developer-user-access.png)
 
@@ -48,4 +45,3 @@ See the [DevOps Dashboard Tutorial](https://curity.io/resources/learn/devops-das
 ## More Information
 
 Please visit [curity.io](https://curity.io/) for more information about the Curity Identity Server.
-
