@@ -111,7 +111,6 @@
          <expose-detailed-error-messages />
          <settings>
             <authorization-server xmlns="https://curity.se/ns/conf/profile/oauth">
-               <authorization-manager>dashboard_groups_authorization_manager</authorization-manager>
                <database-client>
                   <client-data-source>default-datasource</client-data-source>
                </database-client>
