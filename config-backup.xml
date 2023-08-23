@@ -308,6 +308,7 @@
                         <id>default</id>
                         <access_token>
                            <claim>groups</claim>
+                           <claim>urn:se:curity:claims:admin:groups</claim>
                         </access_token>
                         <id_token>
                            <claim>address</claim>
