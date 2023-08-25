@@ -56,9 +56,10 @@
             <authentication-service xmlns="https://curity.se/ns/conf/profile/authentication">
                <authentication-actions>
                   <authentication-action>
-                     <id>external-attributes</id>
+                     <id>getEmployeeRole</id>
                      <script-transformer xmlns="https://curity.se/ns/ext-conf/script-transformer">
-                        <transformation-procedure>external-attributes-proc</transformation-procedure>
+                        <attributes-location>subject-attributes</attributes-location>
+                        <transformation-procedure>getEmployeeRole-proc</transformation-procedure>
                      </script-transformer>
                   </authentication-action>
                </authentication-actions>
@@ -66,9 +67,10 @@
                   <authenticator>
                      <id>username</id>
                      <authentication-actions>
-                        <login>external-attributes</login>
+                        <login>getEmployeeRole</login>
                      </authentication-actions>
-                     <username xmlns="https://curity.se/ns/ext-conf/username" />
+                     <username xmlns="https://curity.se/ns/ext-conf/username">
+                     </username>
                   </authenticator>
                </authenticators>
                <protocols>
@@ -525,8 +527,8 @@
    <processing xmlns="https://curity.se/ns/conf/base">
       <procedures>
          <transformation-procedure>
-            <id>external-attributes-proc</id>
-            <script>LyoqCiAqIFRoaXMgaXMgYW4gZXhhbXBsZSBwcm9jZWR1cmUgdGhhdCBwZXJmb3JtcyBubyB0cmFuc2Zvcm1hdGlvbgogKiBAcGFyYW0ge3NlLmN1cml0eS5pZGVudGl0eXNlcnZlci5wcm9jZWR1cmVzLmNvbnRleHQuVHJhbnNmb3JtYXRpb25Qcm9jZWR1cmVDb250ZXh0fSBjb250ZXh0CiAqIEByZXR1cm5zIHsqfQogKi8KZnVuY3Rpb24gcmVzdWx0KGNvbnRleHQpIHsKCiAgICB2YXIgYXR0cmlidXRlcyA9IGNvbnRleHQuYXR0cmlidXRlTWFwOwoKICAgIGlmIChhdHRyaWJ1dGVzLnN1YmplY3QgPT09ICdqb2huZG9lJykgewogICAgICAgIGF0dHJpYnV0ZXMucm9sZSA9ICdkZXZvcHMnOwogICAgfQoKICAgIGlmIChhdHRyaWJ1dGVzLnN1YmplY3QgPT09ICdqYW5lZG9lJykgewogICAgICAgIGF0dHJpYnV0ZXMucm9sZSA9ICdkZXZlbG9wZXJzJzsKICAgIH0KCiAgICByZXR1cm4gYXR0cmlidXRlczsKfQ==</script>
+            <id>getEmployeeRole-proc</id>
+            <script>LyoqCiAqIFRoaXMgaXMgYW4gZXhhbXBsZSBwcm9jZWR1cmUgdGhhdCBwZXJmb3JtcyBubyB0cmFuc2Zvcm1hdGlvbgogKiBAcGFyYW0ge3NlLmN1cml0eS5pZGVudGl0eXNlcnZlci5wcm9jZWR1cmVzLmNvbnRleHQuVHJhbnNmb3JtYXRpb25Qcm9jZWR1cmVDb250ZXh0fSBjb250ZXh0CiAqIEByZXR1cm5zIHsqfQogKi8KZnVuY3Rpb24gcmVzdWx0KGNvbnRleHQpIHsKICAvLyB0aGUgJ2NvbnRleHQuYXR0cmlidXRlTWFwJyBjb250ZW50IGNvbWVzIGZyb20gdGhlIGNvbmZpZ3VyZWQgJ2F0dHJpYnV0ZXMtbG9jYXRpb24nIChzdWJqZWN0LWF0dHJpYnV0ZXMsIGNvbnRleHQtYXR0cmlidXRlcywgb3IgYWN0aW9uLWF0dHJpYnV0ZXMpCiAgdmFyIGF0dHJpYnV0ZXMgPSBjb250ZXh0LmF0dHJpYnV0ZU1hcDsKCiAgaWYgKGF0dHJpYnV0ZXMuc3ViamVjdCA9PT0gJ2pvaG5kb2UnKSB7CiAgICBhdHRyaWJ1dGVzLnJvbGUgPSAnZGV2b3BzJzsKICB9CgogIGlmIChhdHRyaWJ1dGVzLnN1YmplY3QgPT09ICdqYW5lZG9lJykgewogICAgYXR0cmlidXRlcy5yb2xlID0gJ2RldmVsb3BlcnMnOwogIH0KCiAgLy8gdGhlIHJldHVybmVkIGF0dHJpYnV0ZXMgd2lsbCBiZSBhc3NpZ25lZCB0byB0aGUgY29uZmlndXJlZCAnYXR0cmlidXRlcy1sb2NhdGlvbicKICByZXR1cm4gYXR0cmlidXRlczsKfQ==</script>
          </transformation-procedure>
       </procedures>
       <authorization-managers>
