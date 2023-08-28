@@ -1,3 +1,0 @@
-connection refused (stop)
-CDB boot error: failed to load ../var/configs/config.xml:72: invalid value for: username in /base:profiles/base:profile[base:id='authentication-service'][base:type='auth:authentication-service']/base:settings/auth:authentication-service/auth:authenticators/auth:authenticator[auth:id='username']/username:username
-Daemon died status=10
