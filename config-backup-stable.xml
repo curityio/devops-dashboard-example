@@ -70,7 +70,7 @@
                         <login>getEmployeeRole</login>
                      </authentication-actions>
                      <username xmlns="https://curity.se/ns/ext-conf/username">
--                     </username>
+                     </username>
                   </authenticator>
                </authenticators>
                <protocols>
