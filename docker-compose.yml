@@ -2,30 +2,12 @@ version: '3.8'
 services:
 
   #
-  # A standalone instance of the Curity Identity Server
-  #
-  curity-idsvr:
-    image: curity.azurecr.io/curity/idsvr:7.5.1
-    hostname: curityserver
-    ports:
-     - 6749:6749
-     - 8443:8443
-    volumes:
-     - ./config-backup.xml:/opt/idsvr/etc/init/config.xml
-     - ./license.json:/opt/idsvr/etc/init/license/license.json
-    environment:
-      ADMIN: 'true'
-      ADMIN_PASSWORD: 'Password1'
-      LOGGING_LEVEL: 'INFO'
-      RUNTIME_BASE_URL: "${RUNTIME_BASE_URL}"
-      ADMIN_BASE_URL: "${ADMIN_BASE_URL}"
-
-  #
-  # A SQL database for customer user accounts (bob and alice)
+  # A JDBC data source for user and client storage, to enable GraphQL access
   #
   curity-data:
-    image: postgres:14.5
+    image: postgres:15.3
     hostname: dbserver
+    container_name: postgres
     ports:
      - 5432:5432
     volumes:
@@ -37,3 +19,23 @@ services:
       POSTGRES_DB: 'idsvr'
 
 
+  #
+  # A standalone instance of the Curity Identity Server that uses a Postgres database
+  #
+  curity-idsvr:
+    image: curity.azurecr.io/curity/idsvr:8.4.1
+    hostname: curityserver
+    container_name: curity
+    ports:
+     - 6749:6749
+     - 8443:8443
+    volumes:
+     - ./config-backup.xml:/opt/idsvr/etc/init/config.xml
+     - ./license.json:/opt/idsvr/etc/init/license/license.json
+    environment:
+      ADMIN: 'true'
+      ADMIN_UI_HTTP_MODE: 'true'
+      ADMIN_PASSWORD: 'Password1'
+      LOGGING_LEVEL: 'INFO'
+      RUNTIME_BASE_URL: "${RUNTIME_BASE_URL}"
+      ADMIN_BASE_URL: "${ADMIN_BASE_URL}"

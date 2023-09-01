@@ -5,7 +5,7 @@
          <base-url>#{RUNTIME_BASE_URL}</base-url>
          <admin-service>
             <http>
-               <ssl-server-keystore>default-admin-ssl-key</ssl-server-keystore>
+               <base-url>#{ADMIN_BASE_URL}</base-url>
                <web-ui />
                <restconf>
                   <oauth xmlns="https://curity.se/ns/conf/profile/oauth">
@@ -14,7 +14,7 @@
                   </oauth>
                </restconf>
                <devops-dashboard xmlns="https://curity.se/ns/conf/profile/oauth">
-                  <authorization-manager>dashboard_permissions_authorization_manager</authorization-manager>
+                  <authorization-manager>dashboard_groups_authorization_manager</authorization-manager>
                   <client>devops_dashboard_restconf_client</client>
                </devops-dashboard>
             </http>
@@ -28,12 +28,12 @@
             </zones>
             <service-role>
                <id>default</id>
-               <protocol>https</protocol>
-               <ssl-server-keystore>default-admin-ssl-key</ssl-server-keystore>
+               <protocol>http</protocol>
                <enable-http-v2>true</enable-http-v2>
                <endpoints>authentication-service-anonymous</endpoints>
                <endpoints>authentication-service-authentication</endpoints>
                <endpoints>authentication-service-registration</endpoints>
+               <endpoints>client-management</endpoints>
                <endpoints>dashboard-management-admin</endpoints>
                <endpoints>token-service-anonymous</endpoints>
                <endpoints>token-service-assisted-token</endpoints>
@@ -56,9 +56,10 @@
             <authentication-service xmlns="https://curity.se/ns/conf/profile/authentication">
                <authentication-actions>
                   <authentication-action>
-                     <id>external-attributes</id>
+                     <id>getEmployeeRole</id>
                      <script-transformer xmlns="https://curity.se/ns/ext-conf/script-transformer">
-                        <transformation-procedure>external-attributes-proc</transformation-procedure>
+                        <attributes-location>subject-attributes</attributes-location>
+                        <transformation-procedure>getEmployeeRole-proc</transformation-procedure>
                      </script-transformer>
                   </authentication-action>
                </authentication-actions>
@@ -66,9 +67,10 @@
                   <authenticator>
                      <id>username</id>
                      <authentication-actions>
-                        <login>external-attributes</login>
+                        <login>getEmployeeRole</login>
                      </authentication-actions>
-                     <username xmlns="https://curity.se/ns/ext-conf/username" />
+                     <username xmlns="https://curity.se/ns/ext-conf/username">
+                     </username>
                   </authenticator>
                </authenticators>
                <protocols>
@@ -111,6 +113,9 @@
          <expose-detailed-error-messages />
          <settings>
             <authorization-server xmlns="https://curity.se/ns/conf/profile/oauth">
+               <database-client>
+                  <client-data-source>default-datasource</client-data-source>
+               </database-client>
                <authentication-service>
                   <authentication-profile>authentication-service</authentication-profile>
                </authentication-service>
@@ -168,6 +173,7 @@
                   <scope>
                      <id>urn:se:curity:scopes:admin:api</id>
                      <claims>groups</claims>
+                     <claims>urn:se:curity:claims:admin:groups</claims>
                   </scope>
                </scopes>
                <claims>
@@ -304,6 +310,7 @@
                         <id>default</id>
                         <access_token>
                            <claim>groups</claim>
+                           <claim>urn:se:curity:claims:admin:groups</claim>
                         </access_token>
                         <id_token>
                            <claim>address</claim>
@@ -372,7 +379,7 @@
                         <scope>openid</scope>
                         <scope>urn:se:curity:scopes:admin:api</scope>
                         <user-authentication>
-                           <allowed-post-logout-redirect-uris>https://localhost:6749/admin/dashboard/assisted.html</allowed-post-logout-redirect-uris>
+                           <allowed-post-logout-redirect-uris>#{ADMIN_BASE_URL}/admin/dashboard/assisted.html</allowed-post-logout-redirect-uris>
                         </user-authentication>
                         <allowed-origins>#{ADMIN_BASE_URL}</allowed-origins>
                         <capabilities>
@@ -391,6 +398,12 @@
             </authorization-server>
          </settings>
          <endpoints>
+            <endpoint>
+               <id>client-management</id>
+               <uri>/client-management</uri>
+               <client-authentication>disallow</client-authentication>
+               <endpoint-kind>oauth-client-graphql-api</endpoint-kind>
+            </endpoint>
             <endpoint>
                <id>token-service-anonymous</id>
                <uri>/oauth/v2/oauth-anonymous</uri>
@@ -450,7 +463,7 @@
                <api-authentication>
                   <oauth-service>token-service</oauth-service>
                </api-authentication>
-               <authorization-manager>dashboard_permissions_authorization_manager</authorization-manager>
+               <authorization-manager>dashboard_groups_authorization_manager</authorization-manager>
                <user-account-data-source>default-datasource</user-account-data-source>
                <token-data-source>default-datasource</token-data-source>
                <credential-management>
@@ -461,13 +474,13 @@
          <endpoints>
             <endpoint>
                <id>dashboard-management-admin</id>
-               <uri>/dashboard</uri>
+               <uri>/um/graphql/admin</uri>
                <client-authentication>disallow</client-authentication>
                <endpoint-kind>um-graphql-api</endpoint-kind>
             </endpoint>
             <endpoint>
                <id>user-management-admin</id>
-               <uri>/scim</uri>
+               <uri>/um/admin</uri>
                <endpoint-kind>um-api</endpoint-kind>
             </endpoint>
          </endpoints>
@@ -514,13 +527,13 @@
    <processing xmlns="https://curity.se/ns/conf/base">
       <procedures>
          <transformation-procedure>
-            <id>external-attributes-proc</id>
-            <script>LyoqCiAqIFRoaXMgaXMgYW4gZXhhbXBsZSBwcm9jZWR1cmUgdGhhdCBwZXJmb3JtcyBubyB0cmFuc2Zvcm1hdGlvbgogKiBAcGFyYW0ge3NlLmN1cml0eS5pZGVudGl0eXNlcnZlci5wcm9jZWR1cmVzLmNvbnRleHQuVHJhbnNmb3JtYXRpb25Qcm9jZWR1cmVDb250ZXh0fSBjb250ZXh0CiAqIEByZXR1cm5zIHsqfQogKi8KZnVuY3Rpb24gcmVzdWx0KGNvbnRleHQpIHsKCiAgICB2YXIgYXR0cmlidXRlcyA9IGNvbnRleHQuYXR0cmlidXRlTWFwOwoKICAgIGlmIChhdHRyaWJ1dGVzLnN1YmplY3QgPT09ICdqb2huZG9lJykgewogICAgICAgIGF0dHJpYnV0ZXMucm9sZSA9ICdkZXZvcHMnOwogICAgfQoKICAgIGlmIChhdHRyaWJ1dGVzLnN1YmplY3QgPT09ICdqYW5lZG9lJykgewogICAgICAgIGF0dHJpYnV0ZXMucm9sZSA9ICdkZXZlbG9wZXJzJzsKICAgIH0KCiAgICByZXR1cm4gYXR0cmlidXRlczsKfQ==</script>
+            <id>getEmployeeRole-proc</id>
+            <script>LyoqCiAqIFRoaXMgaXMgYW4gZXhhbXBsZSBwcm9jZWR1cmUgdGhhdCBwZXJmb3JtcyBubyB0cmFuc2Zvcm1hdGlvbgogKiBAcGFyYW0ge3NlLmN1cml0eS5pZGVudGl0eXNlcnZlci5wcm9jZWR1cmVzLmNvbnRleHQuVHJhbnNmb3JtYXRpb25Qcm9jZWR1cmVDb250ZXh0fSBjb250ZXh0CiAqIEByZXR1cm5zIHsqfQogKi8KZnVuY3Rpb24gcmVzdWx0KGNvbnRleHQpIHsKICAvLyB0aGUgJ2NvbnRleHQuYXR0cmlidXRlTWFwJyBjb250ZW50IGNvbWVzIGZyb20gdGhlIGNvbmZpZ3VyZWQgJ2F0dHJpYnV0ZXMtbG9jYXRpb24nIChzdWJqZWN0LWF0dHJpYnV0ZXMsIGNvbnRleHQtYXR0cmlidXRlcywgb3IgYWN0aW9uLWF0dHJpYnV0ZXMpCiAgdmFyIGF0dHJpYnV0ZXMgPSBjb250ZXh0LmF0dHJpYnV0ZU1hcDsKCiAgaWYgKGF0dHJpYnV0ZXMuc3ViamVjdCA9PT0gJ2pvaG5kb2UnKSB7CiAgICBhdHRyaWJ1dGVzLnJvbGUgPSAnZGV2b3BzJzsKICB9CgogIGlmIChhdHRyaWJ1dGVzLnN1YmplY3QgPT09ICdqYW5lZG9lJykgewogICAgYXR0cmlidXRlcy5yb2xlID0gJ2RldmVsb3BlcnMnOwogIH0KCiAgLy8gdGhlIHJldHVybmVkIGF0dHJpYnV0ZXMgd2lsbCBiZSBhc3NpZ25lZCB0byB0aGUgY29uZmlndXJlZCAnYXR0cmlidXRlcy1sb2NhdGlvbicKICByZXR1cm4gYXR0cmlidXRlczsKfQ==</script>
          </transformation-procedure>
       </procedures>
       <authorization-managers>
          <authorization-manager>
-            <id>dashboard_permissions_authorization_manager</id>
+            <id>dashboard_groups_authorization_manager</id>
             <groups xmlns="https://curity.se/ns/conf/authorization-manager/group">
                <scope>urn:se:curity:scopes:admin:api</scope>
                <group>
