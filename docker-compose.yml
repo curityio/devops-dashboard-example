@@ -21,9 +21,10 @@ services:
 
   #
   # A standalone instance of the Curity Identity Server that uses a Postgres database
+  # Ensure that the latest local copy of the Docker image is 8.4 or above
   #
   curity-idsvr:
-    image: curity.azurecr.io/curity/idsvr:8.4.1
+    image: curity.azurecr.io/curity/idsvr:latest
     hostname: curityserver
     container_name: curity
     ports:
