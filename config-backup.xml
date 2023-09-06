@@ -33,7 +33,7 @@
                <endpoints>authentication-service-anonymous</endpoints>
                <endpoints>authentication-service-authentication</endpoints>
                <endpoints>authentication-service-registration</endpoints>
-               <endpoints>client-management</endpoints>
+               <!--endpoints>client-management</endpoints-->
                <endpoints>dashboard-management-admin</endpoints>
                <endpoints>token-service-anonymous</endpoints>
                <endpoints>token-service-assisted-token</endpoints>
@@ -113,9 +113,9 @@
          <expose-detailed-error-messages />
          <settings>
             <authorization-server xmlns="https://curity.se/ns/conf/profile/oauth">
-               <database-client>
+               <!--database-client>
                   <client-data-source>default-datasource</client-data-source>
-               </database-client>
+               </database-client-->
                <authentication-service>
                   <authentication-profile>authentication-service</authentication-profile>
                </authentication-service>
@@ -398,12 +398,12 @@
             </authorization-server>
          </settings>
          <endpoints>
-            <endpoint>
+            <!--endpoint>
                <id>client-management</id>
                <uri>/client-management</uri>
                <client-authentication>disallow</client-authentication>
                <endpoint-kind>oauth-client-graphql-api</endpoint-kind>
-            </endpoint>
+            </endpoint-->
             <endpoint>
                <id>token-service-anonymous</id>
                <uri>/oauth/v2/oauth-anonymous</uri>
