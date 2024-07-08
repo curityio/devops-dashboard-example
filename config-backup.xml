@@ -492,6 +492,8 @@
             <id>default-datasource</id>
             <jdbc xmlns="https://curity.se/ns/ext-conf/jdbc">
                <connection-string>data:text/plain;aes,v:S.ZUVuTDBHZkNhZ0xvbFRzeg==.3JdIVu5qs4Hi1FJYn3V48Q==.UxfKBhqWr7z2fyKXVpLhZ8mNw-oOUUqU_rtLptyS09H-FHWwk3asYjmxlv4h1gYH.r7BtNxqDhigf8V2EE1y4k_Oa5IGo7BMYfxrALjZ7TWg=</connection-string>
+               <standard-credentials-mode>
+               </standard-credentials-mode>
                <driver>org.postgresql.Driver</driver>
                <password>data:text/plain;aes,v:S.dUYwNENlRzRZZGwyWGVlWQ==.Kr4N9LYZB5Fnp_fxW5AY_A==.bkgHOlThtr2Elp8vZuQ6qg==.hP-dh9dlPStEtD62nxH0XhSzZmGViplSDeTCjSbeOcE=</password>
                <username>postgres</username>
